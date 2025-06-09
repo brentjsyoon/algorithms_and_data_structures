@@ -75,4 +75,59 @@ public class Tree<T> {
             root.printTree("");
         }
     }
+
+    // Pretraversal DFS
+    public void preDFS(TreeNode<T> root) {
+        if (root != null) {
+            System.out.println(root.data);
+            for (TreeNode<T> child : root.children) {
+                preDFS(child);
+            }
+        }
+    }
+
+    // Posttraversal DFS
+    public void postDFS(TreeNode<T> root) {
+        if (root != null) {
+            for (TreeNode<T> child : root.children) {
+                postDFS(child);
+            }
+            System.out.println(root.data);
+        }
+    }
+    
+    // Pretraversal BFS (Level-order)
+    public void preBFS(TreeNode<T> root) {
+        if (root == null) return;
+
+        List<TreeNode<T>> queue = new ArrayList<>();
+        queue.add(root);
+
+        int index = 0;
+        while (index < queue.size()) {
+            TreeNode<T> current = queue.get(index++);
+            System.out.println(current.data);
+
+            queue.addAll(current.children);
+        }
+    }
+
+    // Posttraversal BFS (Level-order, printed in reverse)
+    public void postBFS(TreeNode<T> root) {
+        if (root == null) return;
+
+        List<TreeNode<T>> queue = new ArrayList<>();
+        queue.add(root);
+
+        int index = 0;
+        while (index < queue.size()) {
+            TreeNode<T> current = queue.get(index++);
+            queue.addAll(current.children);
+        }
+
+        // Print nodes in reverse order
+        for (int i = queue.size() - 1; i >= 0; i--) {
+            System.out.println(queue.get(i).data);
+        }
+    }
 }
