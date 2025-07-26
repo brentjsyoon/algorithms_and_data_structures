@@ -87,4 +87,31 @@ public class Heap<T extends Comparable<T>> {
 
         return min;
     }
+
+    public void downHeap(int startIndex, int maxIndex) {
+        int i = startIndex;
+        while (2*i+1 <= maxIndex) {
+            int child = 2*i+1;
+            if (child < maxIndex) {
+                if (this.list.get(child+1).compareTo(this.list.get(child)) < 0) {
+                    child = child + 1;
+                }
+            }
+            if (this.list.get(child).compareTo(this.list.get(i)) < 0) {
+                T temp = this.list.get(child);
+                this.list.set(child, this.list.get(i));
+                this.list.set(i, temp);
+                i = child;
+            }
+            else break;
+        }
+    }
+
+    public void buildHeap(ArrayList<T> heap) {
+        this.list = new ArrayList<>(heap);
+
+        for (int k = (heap.size()-1)/2; k >= 0; k--) {
+            downHeap(k, heap.size()-1);
+        }
+    }
 }
