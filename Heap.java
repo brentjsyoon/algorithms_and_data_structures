@@ -1,6 +1,7 @@
 package pkg1;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class Heap<T extends Comparable<T>> {
 
@@ -113,5 +114,42 @@ public class Heap<T extends Comparable<T>> {
         for (int k = (heap.size()-1)/2; k >= 0; k--) {
             downHeap(k, heap.size()-1);
         }
+    }
+
+    public void heapSort() {
+        int heapSize = this.list.size();
+        for (int i = heapSize - 1; i > 0; i--) {
+            T temp = this.list.get(0);
+            this.list.set(0, this.list.get(i));
+            this.list.set(i, temp);
+
+            minHeapify(0, i);
+        }
+
+        Collections.reverse(this.list);
+    }
+
+    public void minHeapify(int i, int heapSize) {
+        T parent = this.list.get(i);
+        int left = i*2+1;
+        int right = i*2+2;
+        int smallest = i;
+        if (left < heapSize && parent.compareTo(this.list.get(left)) > 0) {
+            smallest = left;
+        }
+        if (right < heapSize && this.list.get(smallest).compareTo(this.list.get(right)) > 0) {
+            smallest = right;
+        }
+        if (smallest != i) {
+            T temp = this.list.get(i);
+            this.list.set(i, this.list.get(smallest));
+            this.list.set(smallest, temp);
+
+            minHeapify(smallest, heapSize);
+        }
+    }
+
+    public void printList() {
+        System.out.println(this.list);
     }
 }
